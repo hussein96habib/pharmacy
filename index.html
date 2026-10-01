@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صيدليتي - المنصة الطبية المتكاملة</title>
+    <!-- استدعاء Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- 1. شريط الإشعارات المتحرك العاجل (Announcement Bar) -->
+    <div class="bg-amber-400 text-teal-950 text-xs sm:text-sm font-bold py-2 px-4 text-center shadow-inner flex justify-center items-center gap-2">
+        <span>🔥 خصم 20% على جميع الفيتامينات عند الطلب اليوم!</span>
+        <span class="mx-2">|</span>
+        <span>🚚 توصيل مجاني للطلبات فوق 25,000 د.ع داخل بغداد</span>
+    </div>
+
+    <!-- شريط التنقل العلوي -->
+    <header class="bg-teal-700 text-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold flex items-center gap-2">
+                <span>🩺</span> صيدليتي
+            </a>
+            
+            <div class="flex items-center gap-3">
+                <!-- زر السلة -->
+                <a href="checkout.html" class="bg-teal-800 text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-teal-900 flex items-center gap-2 shadow">
+                    <span>🛒 السلة</span>
+                    <span id="cart-count" class="bg-amber-400 text-teal-900 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+                </a>
+                <a href="pharmacy.html" class="bg-amber-500 text-teal-950 px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-amber-400 transition shadow">
+                    🏥 صيدلية الأمل
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم البحث البارز (Hero Section) -->
+    <section class="bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 text-white py-12 px-4 text-center relative overflow-hidden">
+        <div class="container mx-auto max-w-2xl relative z-10 space-y-4">
+            <span class="bg-teal-600/80 text-teal-100 text-xs px-3 py-1 rounded-full font-semibold">منصتك الطبية الأولى في العراق</span>
+            <h1 class="text-2xl sm:text-4xl font-bold">ابحث عن أدويتك أو صيدليتك القريبة بثوانٍ</h1>
+            <p class="text-teal-100 text-xs sm:text-sm">نوصل لك الأدوية، الفيتامينات، والاحتياجات الطبية من أقرب صيدلية لبيتك على مدار الساعة.</p>
+            
+            <!-- صندوق البحث الشامل -->
+            <div class="bg-white p-2 rounded-2xl shadow-xl flex items-center mt-6">
+                <span class="px-3 text-gray-400 text-lg">🔍</span>
+                <input type="text" id="global-search" placeholder="ابحث عن اسم دواء (مثل: بانادول، فيتامين سي، جلوكوفاج)..." class="w-full py-2 text-xs sm:text-sm text-gray-700 focus:outline-none">
+                <button onclick="alert('جاري البحث في جميع الصيدليات المسجلة...');" class="bg-teal-700 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm hover:bg-teal-800 transition">بحث</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto px-4 py-8 space-y-10">
+
+        <!-- 3. نظام البحث بحسب "أعراض المرض" (Symptom-Based Search) -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-base sm:text-lg font-bold text-gray-700">🩺 بماذا تشعر اليوم؟ (اختر العرض للبحث السريع)</h2>
+                <span class="text-xs text-teal-700 font-semibold">توجيه ذكي للعلاج</span>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <button onclick="filterBySymptom('صداع')" class="bg-teal-50 hover:bg-teal-700 hover:text-white text-teal-800 border border-teal-100 p-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                    <span>🤕</span> صداع وألم رأس
+                </button>
+                <button onclick="filterBySymptom('حرارة')" class="bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-800 border border-amber-100 p-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                    <span>🌡️</span> حرارة ونزلات برد
+                </button>
+                <button onclick="filterBySymptom('معدة')" class="bg-blue-50 hover:bg-blue-700 hover:text-white text-blue-800 border border-blue-100 p-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                    <span>🤢</span> مغص واضطراب معدة
+                </button>
+                <button onclick="filterBySymptom('مفاصل')" class="bg-purple-50 hover:bg-purple-700 hover:text-white text-purple-800 border border-purple-100 p-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                    <span>🦴</span> ألم مفاصل وعضلات
+                </button>
+            </div>
+        </section>
+
+        <!-- قسم الأقسام السريعة (Quick Categories) -->
+        <section>
+            <h2 class="text-lg font-bold text-gray-700 mb-4">الأقسام الطبية الشائعة</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div onclick="location.href='pharmacy.html'" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center hover:border-teal-700 transition cursor-pointer group">
+                    <span class="text-3xl block mb-2 group-hover:scale-110 transition">💊</span>
+                    <h3 class="font-bold text-teal-800 text-sm">مسكنات وعلاجات</h3>
+                    <p class="text-[11px] text-gray-400 mt-1">تخفيف الآلام والحرارة</p>
+                </div>
+                <div onclick="location.href='pharmacy.html'" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center hover:border-teal-700 transition cursor-pointer group">
+                    <span class="text-3xl block mb-2 group-hover:scale-110 transition">🌿</span>
+                    <h3 class="font-bold text-teal-800 text-sm">فيتامينات ومكملات</h3>
+                    <p class="text-[11px] text-gray-400 mt-1">دعم المناعة والصحة العامة</p>
+                </div>
+                <div onclick="location.href='pharmacy.html'" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center hover:border-teal-700 transition cursor-pointer group">
+                    <span class="text-3xl block mb-2 group-hover:scale-110 transition">🩺</span>
+                    <h3 class="font-bold text-teal-800 text-sm">أدوية الأمراض المزمنة</h3>
+                    <p class="text-[11px] text-gray-400 mt-1">ضغط، سكر، وألباب</p>
+                </div>
+                <div onclick="location.href='pharmacy.html'" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center hover:border-teal-700 transition cursor-pointer group">
+                    <span class="text-3xl block mb-2 group-hover:scale-110 transition">👶</span>
+                    <h3 class="font-bold text-teal-800 text-sm">عناية بالأطفال</h3>
+                    <p class="text-[11px] text-gray-400 mt-1">حليب، حفاضات، ومخفضات حرارة</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. قسم عروض الفلاش والخصومات (Flash Deals Section) -->
+        <section class="bg-gradient-to-br from-teal-50 to-teal-100/60 p-6 rounded-2xl border border-teal-200 shadow-sm space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <span class="bg-red-500 text-white text-[10px] px-2.5 py-1 rounded-full font-bold">عروض لفترة محدودة ⚡</span>
+                    <h2 class="text-lg font-bold text-teal-900 mt-1">باقات العناية الذكية والمناعة</h2>
+                </div>
+                <a href="pharmacy.html" class="text-xs text-teal-700 font-bold hover:underline">عرض كل المنتجات ←</a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- عرض 1 -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-teal-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">توفير 20%</span>
+                            <span class="text-xs text-gray-400 line-through">12,000 د.ع</span>
+                        </div>
+                        <h3 class="font-bold text-teal-800 text-base">بانادول + فيتامين سي فوار</h3>
+                        <p class="text-xs text-gray-500 mt-1">الباقة المثالية لمحاربة نزلات البرد والإنفلونزا السريعة.</p>
+                        <span class="text-teal-900 font-bold text-base mt-3 block">9,500 د.ع</span>
+                    </div>
+                    <button onclick="alert('تم إضافة باقة العناية إلى السلة بنجاح!');" class="w-full mt-4 bg-teal-700 text-white py-2 rounded-lg font-bold text-xs hover:bg-teal-800 transition">🛒 اطلب الباقة الآن</button>
+                </div>
+
+                <!-- عرض 2 -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-teal-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">توفير 15%</span>
+                            <span class="text-xs text-gray-400 line-through">15,000 د.ع</span>
+                        </div>
+                        <h3 class="font-bold text-teal-800 text-base">باكج المناعة اليومية</h3>
+                        <p class="text-xs text-gray-500 mt-1">فيتامين سي + مكمل الزنك لدعم الطاقة والمناعة العامة.</p>
+                        <span class="text-teal-900 font-bold text-base mt-3 block">12,500 د.ع</span>
+                    </div>
+                    <button onclick="alert('تم إضافة باكج المناعة إلى السلة بنجاح!');" class="w-full mt-4 bg-teal-700 text-white py-2 rounded-lg font-bold text-xs hover:bg-teal-800 transition">🛒 اطلب الباقة الآن</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- بطاقة رفع الروشتة السريعة -->
+        <section class="bg-gradient-to-r from-amber-500 to-amber-600 text-teal-950 rounded-2xl p-6 shadow-md flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="space-y-2 text-center md:text-right">
+                <span class="bg-white/30 text-teal-950 text-xs px-3 py-1 rounded-full font-bold">خدمة مريحة وسريعة</span>
+                <h2 class="text-xl sm:text-2xl font-bold">لديك روشتة طبية ولا تعرف أين تجد العلاج؟</h2>
+                <p class="text-xs sm:text-sm text-teal-900 leading-relaxed max-w-xl">
+                    صور الوصفة الطبية وارفعها بنقرة واحدة، وسيقوم فريق الصيادلة بتجهيزها وإرسالها لك مباشرة لغاية باب البيت.
+                </p>
+            </div>
+            <a href="pharmacy.html" class="bg-teal-900 text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-teal-950 transition shadow whitespace-nowrap">
+                📸 ارفع الروشتة الآن
+            </a>
+        </section>
+
+        <!-- قسم الصيدليات المعتمدة -->
+        <section>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-gray-700">الصيدليات المعتمدة القريبة منك</h2>
+                <span class="text-xs text-teal-700 font-bold">عرض الكل (1)</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- بطاقة صيدلية الأمل -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between space-y-4 hover:shadow-md transition">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <span class="bg-green-100 text-green-700 text-xs px-2.5 py-1 rounded-full font-semibold">مفتوح الآن 🟢</span>
+                            <span class="text-xs text-amber-500 font-bold">⭐ 4.9 (120 تقييم)</span>
+                        </div>
+                        <h3 class="font-bold text-teal-700 text-lg mt-3">صيدلية الأمل</h3>
+                        <p class="text-xs text-gray-500 mt-1">بغداد، المنصور - شارع المطار</p>
+                        <p class="text-[11px] text-gray-400 mt-2">التوصيل المتوقع: خلال 15 - 30 دقيقة</p>
+                    </div>
+
+                    <div class="pt-2 border-t border-gray-50 flex gap-2">
+                        <a href="pharmacy.html" class="flex-1 bg-teal-700 text-white text-center py-2 rounded-xl text-xs font-bold hover:bg-teal-800 transition">زيارة الصيدلية وعرض الأدوية</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. نافذة ترحيبية منبثقة عائمة (Promo / Location Modal) -->
+    <div id="welcome-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4 text-center animate-in fade-in zoom-in duration-200">
+            <span class="text-4xl block">👋</span>
+            <h3 class="text-xl font-bold text-teal-700">مرحباً بك في منصة صيدليتي!</h3>
+            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                أدخل منطقتك السكنية لنتمكن من عرض الصيدليات الأقرب إليك وحساب وقت التوصيل بدقة:
+            </p>
+            
+            <div class="space-y-3 pt-2">
+                <select id="user-region" class="w-full px-3 py-2.5 border rounded-xl text-xs sm:text-sm bg-gray-50 focus:outline-none focus:border-teal-700">
+                    <option value="baghdad-mansour">بغداد - المنصور</option>
+                    <option value="baghdad-karrada">بغداد - الكرادة</option>
+                    <option value="baghdad-zayona">بغداد - زيونة</option>
+                    <option value="baghdad-adhamia">بغداد - الأعظمية</option>
+                </select>
+                <button onclick="closeWelcomeModal()" class="w-full bg-teal-700 hover:bg-teal-800 text-white py-2.5 rounded-xl font-bold text-sm transition shadow">
+                    ابدأ التصفح والطلب 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-gray-800 text-white text-center py-6 text-sm mt-12">
+        <p>جميع الحقوق محفوظة © 2026 - منصة صيدليتي الطبية</p>
+    </footer>
+
+    <!-- السكربتات التفاعلية -->
+    <script>
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            let countEl = document.getElementById('cart-count');
+            if(countEl) countEl.innerText = cart.length;
+        }
+
+        // إغلاق النافذة الترحيبية المنبثقة
+        function closeWelcomeModal() {
+            document.getElementById('welcome-modal').classList.add('hidden');
+        }
+
+        // فلترة سريعة حسب الأعراض
+        function filterBySymptom(symptom) {
+            alert(`🔍 جاري البحث عن أفضل العلاجات المناسبة لـ "${symptom}" وتوجيهك لصيدلية الأمل...`);
+            location.href = 'pharmacy.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCartCount);
+    </script>
+
+</body>
+</html>

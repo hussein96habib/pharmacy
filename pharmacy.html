@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صيدلية الأمل - صيدليتي الذكية</title>
+    <!-- استدعاء Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- شريط التنقل العلوي -->
+    <header class="bg-teal-700 text-white shadow-lg sticky top-0 z-50 backdrop-blur-md bg-teal-700/95">
+        <div class="container mx-auto px-4 py-3.5 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold flex items-center gap-2">🩺 <span class="tracking-wide">صيدليتي</span></a>
+            
+            <div class="flex items-center gap-3">
+                <!-- زر السلة مع العداد -->
+                <a href="checkout.html" class="bg-teal-800 text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-teal-900 flex items-center gap-2 shadow-sm transition">
+                    <span>🛒 السلة</span>
+                    <span id="cart-count" class="bg-amber-400 text-teal-950 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+                </a>
+                
+                <!-- زر الرئيسية -->
+                <a href="index.html" class="bg-teal-800 text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-teal-900 transition hidden sm:inline-block">الرئيسية</a>
+
+                <!-- زر لوحة الصيدلي -->
+                <button onclick="toggleAdminPanel()" class="bg-amber-500 text-teal-950 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-400 transition shadow-sm flex items-center gap-1.5">
+                    ⚙️ لوحة الصيدلي
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- رأس صفحة الصيدلية - تصميم هادئ ومتطور -->
+    <section class="bg-white border-b border-slate-200 py-8 px-4 shadow-xs">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div class="space-y-1.5">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-teal-800">صيدلية الأمل النموذجية</h1>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> مفتوح الآن
+                    </span>
+                </div>
+                <p class="text-slate-500 text-sm flex items-center gap-1">📍 بغداد، المنصور - شارع المطار</p>
+                <p class="text-xs text-teal-600 font-semibold">⚡ خدمة التوصيل السريع متاحة خلال 30 دقيقة لكافة أنحاء المنطقة.</p>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="tel:07700000000" class="bg-teal-50 text-teal-700 border border-teal-200 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-teal-700 hover:text-white transition shadow-2xs">
+                    📞 اتصال مباشر
+                </a>
+                <a href="https://wa.me/9647700000000" target="_blank" class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-emerald-600 hover:text-white transition shadow-2xs">
+                    💬 مراسلة واتساب
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- محتوى الصفحة الرئيسي -->
+    <main class="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- العمود الأيمن: رفع الروشتة + تتبع الطلب -->
+        <div class="lg:col-span-1 space-y-6">
+            
+            <!-- قسم رفع الروشتة -->
+            <div class="bg-gradient-to-br from-teal-700 to-teal-900 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute -left-6 -bottom-6 w-28 h-28 bg-white/5 rounded-full pointer-events-none"></div>
+                <span class="bg-teal-600/80 text-teal-100 text-[10px] px-3 py-1 rounded-full font-bold tracking-wider">خدمة الروشتات السريعة</span>
+                <h2 class="text-lg font-bold mt-3 mb-1.5">هل لديك روشتة طبية؟</h2>
+                <p class="text-teal-100 text-xs leading-relaxed mb-4">
+                    صور الوصفة وارفعها هنا، وسيقوم صيادلة "صيدلية الأمل" بتجهيز أدويتك وإرسالها فوراً لمنزلك.
+                </p>
+                
+                <form onsubmit="event.preventDefault(); alert('✅ تم إرسال الوصفة الطبية إلى صيدلية الأمل بنجاح!');" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-teal-100 mb-1">اختر صورة الوصفة</label>
+                        <input type="file" accept="image/*" required class="w-full text-xs text-slate-200 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-teal-600 file:text-white hover:file:bg-teal-50 cursor-pointer bg-teal-800/40 rounded-xl p-1 border border-teal-600/50">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="رقم الهاتف للتواصل" required class="w-full px-3.5 py-2.5 rounded-xl text-xs text-slate-800 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div>
+                        <textarea placeholder="عنوان التوصيل بالتفصيل (المنطقة، المحلة، الدالة)" rows="2" required class="w-full px-3.5 py-2.5 rounded-xl text-xs text-slate-800 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-amber-400 text-teal-950 py-2.5 rounded-xl font-bold hover:bg-amber-300 transition text-xs shadow-md">إرسال للصيدلية فوراً</button>
+                </form>
+            </div>
+
+            <!-- قسم تتبع حالة الطلب -->
+            <div class="bg-white p-6 rounded-3xl shadow-xs border border-slate-200/80">
+                <h3 class="font-bold text-slate-800 text-sm mb-2 flex items-center gap-2">
+                    📦 تتبع طلبك السابق
+                </h3>
+                <p class="text-xs text-slate-500 mb-3">أدخل رقم الطلب لمعرفة حالته وموقع المندوب:</p>
+                
+                <div class="space-y-2.5">
+                    <input type="text" id="order-id-input" placeholder="مثال: #ORD-5021" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-teal-700">
+                    <button onclick="checkOrderStatus()" class="w-full bg-teal-700 text-white py-2.5 rounded-xl font-semibold hover:bg-teal-800 transition text-xs shadow-2xs">تتبع حالة الطلب</button>
+                </div>
+
+                <div id="order-status-result" class="mt-4 hidden bg-teal-50 p-3.5 rounded-2xl border border-teal-100 text-xs text-teal-900 space-y-1.5">
+                    <p class="font-bold">حالة الطلب: <span class="text-emerald-600">في الطريق إليك 🛵</span></p>
+                    <p class="text-slate-600 text-[11px]">المندوب في طريقه لعنوانك، وقت الوصول المتوقع: 15 دقيقة.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- العمود الأيسر: البحث الفوري + الفلترة + الكتالوج والأدوية -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-800">كتالوج الأدوية المتوفرة</h2>
+                <span class="text-xs text-slate-400 font-semibold">التحديث يتم تلقائياً من الذاكرة</span>
+            </div>
+
+            <!-- حقل البحث الفوري -->
+            <div class="bg-white p-2 rounded-2xl shadow-xs border border-slate-200/80 flex items-center">
+                <span class="px-3 text-slate-400">🔍</span>
+                <input type="text" id="search-medicine-input" onkeyup="searchMedicines()" placeholder="ابحث عن اسم دواء معين بالكتالوج..." class="w-full py-1.5 text-xs sm:text-sm text-slate-700 placeholder-slate-400 focus:outline-none">
+            </div>
+
+            <!-- أزرار الفلترة التصنيفية -->
+            <div class="flex flex-wrap gap-2">
+                <button onclick="filterCategory('all')" id="btn-all" class="px-4 py-2 rounded-xl text-xs font-semibold bg-teal-700 text-white transition shadow-2xs">الكل</button>
+                <button onclick="filterCategory('painkillers')" id="btn-painkillers" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">مسكنات</button>
+                <button onclick="filterCategory('vitamins')" id="btn-vitamins" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">فيتامينات</button>
+                <button onclick="filterCategory('chronic')" id="btn-chronic" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">أمراض مزمنة</button>
+            </div>
+            
+            <!-- شبكة الأدوية -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="medicines-grid">
+                <!-- الأدوية تضاف هنا برمجياً من الذاكرة -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- نافذة لوحة تحكم الصيدلاني (Admin Modal) -->
+    <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg sm:text-xl font-bold text-teal-800">⚙️ لوحة إدارة صيدلية الأمل</h3>
+                <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-slate-600 font-bold text-lg bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition">✕</button>
+            </div>
+            
+            <hr class="border-slate-100">
+
+            <!-- نموذج إضافة دواء جديد -->
+            <form onsubmit="addNewMedicine(event)" class="bg-teal-50/70 p-4 sm:p-5 rounded-2xl border border-teal-100 space-y-3.5">
+                <h4 class="font-bold text-teal-900 text-xs sm:text-sm">➕ إضافة دواء جديد للكتالوج</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="new-name" placeholder="اسم الدواء مع التركيز (مثل: أبارامول 500)" required class="px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700">
+                    <input type="text" id="new-company" placeholder="الشركة المصنعة (مثل: الحكمة - أردني)" required class="px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700">
+                    <input type="number" id="new-price" placeholder="السعر بالدينار (مثل: 2500)" required class="px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700">
+                    <select id="new-category" class="px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700">
+                        <option value="painkillers">مسكنات</option>
+                        <option value="vitamins">فيتامينات</option>
+                        <option value="chronic">أمراض مزمنة</option>
+                    </select>
+                </div>
+                <input type="text" id="new-active" placeholder="المادة الفعالة للربط بالبدائل (مثل: Paracetamol)" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700">
+                <textarea id="new-uses" placeholder="دواعي الاستعمال الأساسية" rows="2" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700"></textarea>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="new-dosage" placeholder="الجرعة المقترحة" required class="px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700">
+                    <input type="text" id="new-warnings" placeholder="المحاذير الطبية" required class="px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-teal-700">
+                </div>
+                <button type="submit" class="w-full bg-teal-700 text-white py-2.5 rounded-xl font-bold hover:bg-teal-800 transition text-xs shadow-2xs">حفظ وإضافة الدواء للكتالوج</button>
+            </form>
+
+            <div>
+                <h4 class="font-bold text-slate-700 text-xs sm:text-sm mb-2.5">📋 الأدوية المسجلة حالياً في النظام</h4>
+                <div id="admin-medicines-list" class="space-y-2 text-xs max-h-48 overflow-y-auto pr-1">
+                    <!-- قائمة الإدارة -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تفاصيل العلاج والبدائل المنبثقة (Modal) مع خاصية البحث والاختيار حصراً من الكتالوج عند الحاجة -->
+    <div id="medicine-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 id="modal-title" class="text-lg sm:text-xl font-bold text-teal-800">اسم العلاج</h3>
+                    <p id="modal-company" class="text-[11px] font-bold text-teal-600 mt-0.5">الشركة المصنعة</p>
+                    <p id="modal-price" class="text-teal-950 font-extrabold text-sm mt-1">السعر</p>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition">✕</button>
+            </div>
+            
+            <hr class="border-slate-100">
+
+            <div class="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <div>
+                    <strong class="text-teal-900 block mb-1">💡 الاستخدام ودواعي الإستعمال:</strong>
+                    <p id="modal-uses" class="text-xs">التفاصيل...</p>
+                </div>
+                <div>
+                    <strong class="text-teal-900 block mb-1">💊 الجرعة وطريقة الاستخدام:</strong>
+                    <p id="modal-dosage" class="text-xs">الجرعة...</p>
+                </div>
+                <div>
+                    <strong class="text-amber-800 block mb-1">⚠️ تنبيهات ومحاذير طبية:</strong>
+                    <p id="modal-warnings" class="text-xs">المحاذير...</p>
+                </div>
+
+                <!-- قسم البدائل الطبية المتاحة حصراً من الكتالوج -->
+                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 mt-4">
+                    <strong class="text-teal-800 block mb-2 text-xs">🔄 البدائل المتاحة من الكتالوج (بنفس المادة الفعالة):</strong>
+                    <div id="modal-alternatives" class="space-y-2">
+                        <!-- البدائل تظهر هنا ديناميكياً -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="closeModal()" class="w-full bg-teal-700 text-white py-2.5 rounded-2xl font-bold hover:bg-teal-800 transition text-xs shadow-2xs">إغلاق النافذة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر المحادثة العائم -->
+    <div class="fixed bottom-6 left-6 z-50">
+        <button onclick="toggleChatBox()" class="bg-teal-700 hover:bg-teal-800 text-white p-4 rounded-full shadow-xl flex items-center gap-2 transition transform hover:scale-105">
+            <span class="text-xl">💬</span>
+            <span class="text-xs font-bold hidden sm:inline">اسأل الصيدلاني</span>
+        </button>
+    </div>
+
+    <!-- نافذة المحادثة الفورية -->
+    <div id="chat-box" class="fixed bottom-24 left-6 z-50 hidden w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden" style="max-height: 500px;">
+        <div class="bg-teal-700 text-white p-4 flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+                <span class="w-3 h-3 bg-emerald-400 rounded-full inline-block animate-pulse"></span>
+                <div>
+                    <h3 class="font-bold text-xs sm:text-sm">الصيدلاني المناوب</h3>
+                    <p class="text-[10px] text-teal-100">متواجد للإجابة عن أي استفسار طبي</p>
+                </div>
+            </div>
+            <button onclick="toggleChatBox()" class="text-teal-200 hover:text-white font-bold text-base px-2">✕</button>
+        </div>
+        <div id="chat-messages" class="p-4 overflow-y-auto space-y-3 flex-1 bg-slate-50 text-xs sm:text-sm" style="height: 280px;">
+            <div class="bg-white p-3 rounded-2xl shadow-2xs border border-slate-100 max-w-[85%] text-slate-700 text-xs">
+                مرحباً بك! أنا الصيدلاني المناوب. تفضل بسؤالك عن الأدوية أو البدائل المتاحة.
+            </div>
+        </div>
+        <div class="p-3 bg-white border-t border-slate-100 flex gap-2">
+            <input type="text" id="chat-input" placeholder="اكتب سؤالك هنا..." class="flex-1 px-3.5 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-teal-700" onkeypress="if(event.key === 'Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()" class="bg-teal-700 hover:bg-teal-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition">إرسال</button>
+        </div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-slate-900 text-white text-center py-6 text-xs mt-16 border-t border-slate-800">
+        <p>جميع الحقوق محفوظة © 2026 - تطبيق صيدليتي الذكي</p>
+    </footer>
+
+    <!-- السكربتات المتقدمة -->
+    <script>
+        // الأدوية الافتراضية الأولية مع المادة الفعالة للبدائل والكتالوج
+        const defaultMedicines = [
+            {
+                id: 1,
+                name: "بانادول أزرق (Panadol)",
+                company: "GSK (بريطاني)",
+                price: 3500,
+                category: "painkillers",
+                activeIngredient: "paracetamol",
+                uses: "يستخدم لتخفيف الآلام الخفيفة إلى المعتادة مثل الصداع، ألام الأسنان، ألام العضلات، وخفض درجات الحرارة.",
+                dosage: "قرص واحد إلى قرصين كل 4-6 ساعات عند الحاجة (بحد أقصى 8 قرص في اليوم).",
+                warnings: "لا يُستخدم في حال وجود حساسية تجاه الباراسيتامول."
+            },
+            {
+                id: 2,
+                name: "أبارامول (Aparamol)",
+                company: "الشركة العامة للصناعات الدوائية (عراقي)",
+                price: 1500,
+                category: "painkillers",
+                activeIngredient: "paracetamol",
+                uses: "مسكن عام للألام وخافض للحرارة يعتبر بديل اقتصادي ممتاز ومطابق.",
+                dosage: "قرص واحد كل 6 ساعات عند الحاجة.",
+                warnings: "تجنب تجاوز الجرعة اليومية المقررة."
+            },
+            {
+                id: 3,
+                name: "فيتامين سي فوار (Vitamin C)",
+                company: "Bayer (ألماني)",
+                price: 5000,
+                category: "vitamins",
+                activeIngredient: "vitaminc",
+                uses: "مكمل غذائي يساعد في دعم الجهاز المناعي ومقاومة نزلات البرد وتنشيط الجسم.",
+                dosage: "قرص فوار واحد يُذوب في كوب ماء يومياً.",
+                warnings: "يحفظ في مكان جاف بارد بعيداً عن متناول الأطفال."
+            },
+            {
+                id: 4,
+                name: "جلوكوفاج لتنظيم السكر (Glucophage)",
+                company: "Merck (فرنسي)",
+                price: 8000,
+                category: "chronic",
+                activeIngredient: "metformin",
+                uses: "يستخدم لعلاج مرض السكري من النوع الثاني للمساعدة في التحكم بمستوى السكر في الدم.",
+                dosage: "يُخذ حسب إرشادات الطبيب المعالج حصراً.",
+                warnings: "صرف هذا العلاج يتطلب استشارة طبية أو وجود روشتة رسمية."
+            }
+        ];
+
+        // الذاكرة التلقائية (localStorage)
+        function getMedicines() {
+            let meds = localStorage.getItem('pharmacyMeds');
+            if (!meds) {
+                localStorage.setItem('pharmacyMeds', JSON.stringify(defaultMedicines));
+                return defaultMedicines;
+            }
+            return JSON.parse(meds);
+        }
+
+        function saveMedicines(meds) {
+            localStorage.setItem('pharmacyMeds', JSON.stringify(meds));
+            renderMedicines();
+            renderAdminList();
+        }
+
+        // عرض الأدوية في واجهة الصيدلية
+        function renderMedicines() {
+            let meds = getMedicines();
+            let grid = document.getElementById('medicines-grid');
+            grid.innerHTML = "";
+
+            meds.forEach(med => {
+                let badgeColor = med.category === 'painkillers' ? 'bg-teal-50 text-teal-700 border border-teal-100' : med.category === 'vitamins' ? 'bg-amber-50 text-amber-700 border border-amber-100' : 'bg-blue-50 text-blue-700 border border-blue-100';
+                let catName = med.category === 'painkillers' ? 'مسكنات' : med.category === 'vitamins' ? 'فيتامينات' : 'أمراض مزمنة';
+
+                let card = document.createElement('div');
+                card.className = "medicine-card bg-white p-5 rounded-3xl shadow-xs border border-slate-200/80 flex flex-col justify-between hover:shadow-md transition";
+                card.setAttribute('data-category', med.category);
+                card.setAttribute('data-name', med.name.toLowerCase());
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] ${badgeColor} px-2.5 py-0.5 rounded-full font-bold">${catName}</span>
+                            <span class="text-[11px] text-slate-400 font-semibold">${med.company}</span>
+                        </div>
+                        <h3 class="font-bold text-teal-800 text-base mt-1">${med.name}</h3>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">${med.uses}</p>
+                        <span class="text-teal-950 font-extrabold text-sm mt-3 block">${med.price.toLocaleString()} د.ع</span>
+                    </div>
+                    <div class="mt-5 flex gap-2">
+                        <button onclick="openModal(${med.id})" class="flex-1 bg-slate-100 text-slate-700 py-2 rounded-xl font-bold hover:bg-slate-200 transition text-xs">ℹ️ التفاصيل والبدائل</button>
+                        <button onclick="addToCart('${med.name} - ${med.company}', ${med.price})" class="flex-1 bg-teal-50 text-teal-700 border border-teal-200 py-2 rounded-xl font-bold hover:bg-teal-700 hover:text-white transition text-xs">🛒 أضف للسلة</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // فتح نافذة التفاصيل وعرض البدائل حصراً من الكتالوج المسجل
+        function openModal(medId) {
+            let meds = getMedicines();
+            let med = meds.find(m => m.id === medId);
+            if (!med) return;
+
+            document.getElementById('modal-title').innerText = med.name;
+            document.getElementById('modal-company').innerText = "الشركة المصنعة / المنشأ: " + med.company;
+            document.getElementById('modal-price').innerText = med.price.toLocaleString() + " د.ع";
+            document.getElementById('modal-uses').innerText = med.uses;
+            document.getElementById('modal-dosage').innerText = med.dosage;
+            document.getElementById('modal-warnings').innerText = med.warnings;
+
+            let alternativesContainer = document.getElementById('modal-alternatives');
+            alternativesContainer.innerHTML = "";
+
+            let alternatives = meds.filter(m => m.activeIngredient.toLowerCase() === med.activeIngredient.toLowerCase() && m.id !== med.id);
+
+            if (alternatives.length > 0) {
+                alternatives.forEach(alt => {
+                    let altItem = document.createElement('div');
+                    altItem.className = "flex justify-between items-center bg-white p-3 rounded-2xl border border-slate-200 text-xs shadow-2xs";
+                    altItem.innerHTML = `
+                        <div>
+                            <span class="font-bold text-teal-900 block">${alt.name}</span>
+                            <span class="text-slate-500 text-[11px]">${alt.company} - <strong class="text-teal-950">${alt.price.toLocaleString()} د.ع</strong></span>
+                        </div>
+                        <button onclick="addToCart('${alt.name} - ${alt.company}', ${alt.price}); closeModal();" class="bg-teal-700 text-white px-3 py-1.5 rounded-xl font-bold hover:bg-teal-800 transition text-[11px]">طلب البديل</button>
+                    `;
+                    alternativesContainer.appendChild(altItem);
+                });
+            } else {
+                alternativesContainer.innerHTML = `<p class="text-xs text-slate-400">لا توجد بدائل مسجلة أخرى لهذا الدواء في الكتالوج الحالي.</p>`;
+            }
+
+            document.getElementById('medicine-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('medicine-modal').classList.add('hidden');
+        }
+
+        // لوحة التحكم للصيدلي
+        function toggleAdminPanel() {
+            const adminModal = document.getElementById('admin-modal');
+            adminModal.classList.toggle('hidden');
+            renderAdminList();
+        }
+
+        function renderAdminList() {
+            let meds = getMedicines();
+            let listContainer = document.getElementById('admin-medicines-list');
+            listContainer.innerHTML = "";
+
+            meds.forEach(med => {
+                let item = document.createElement('div');
+                item.className = "flex justify-between items-center bg-slate-50 p-3 rounded-2xl border border-slate-200";
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-slate-800">${med.name}</span>
+                        <span class="text-slate-500 text-[11px] block">(${med.company}) - ${med.price.toLocaleString()} د.ع</span>
+                    </div>
+                    <button onclick="deleteMedicine(${med.id})" class="bg-rose-50 text-rose-600 border border-rose-200 px-3 py-1.5 rounded-xl hover:bg-rose-600 hover:text-white transition font-bold text-[11px]">حذف</button>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function addNewMedicine(event) {
+            event.preventDefault();
+            let meds = getMedicines();
+
+            let newMed = {
+                id: Date.now(),
+                name: document.getElementById('new-name').value,
+                company: document.getElementById('new-company').value,
+                price: Number(document.getElementById('new-price').value),
+                category: document.getElementById('new-category').value,
+                activeIngredient: document.getElementById('new-active').value.trim().toLowerCase(),
+                uses: document.getElementById('new-uses').value,
+                dosage: document.getElementById('new-dosage').value,
+                warnings: document.getElementById('new-warnings').value
+            };
+
+            meds.push(newMed);
+            saveMedicines(meds);
+            alert('✅ تمت إضافة الدواء بنجاح إلى الكتالوج والذاكرة!');
+            event.target.reset();
+        }
+
+        function deleteMedicine(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الدواء من الكتالوج؟')) {
+                let meds = getMedicines();
+                meds = meds.filter(m => m.id !== id);
+                saveMedicines(meds);
+            }
+        }
+
+        // السلة والبحث والفلترة
+        function getCart() { return JSON.parse(localStorage.getItem('myCart')) || []; }
+        function saveCart(cart) { localStorage.setItem('myCart', JSON.stringify(cart)); updateCartCount(); }
+        
+        function addToCart(name, price) {
+            let cart = getCart();
+            cart.push({ id: Date.now(), name: name, price: price });
+            saveCart(cart);
+            alert(`✅ تمت إضافة "${name}" إلى السلة بنجاح!`);
+        }
+        
+        function updateCartCount() { document.getElementById('cart-count').innerText = getCart().length; }
+
+        function searchMedicines() {
+            let input = document.getElementById('search-medicine-input').value.toLowerCase();
+            let cards = document.querySelectorAll('.medicine-card');
+            cards.forEach(card => {
+                let name = card.getAttribute('data-name');
+                card.style.display = name.includes(input) ? "flex" : "none";
+            });
+        }
+
+        function filterCategory(category) {
+            ['btn-all', 'btn-painkillers', 'btn-vitamins', 'btn-chronic'].forEach(id => {
+                document.getElementById(id).className = "px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition";
+            });
+            document.getElementById('btn-' + category).className = "px-4 py-2 rounded-xl text-xs font-semibold bg-teal-700 text-white transition shadow-2xs";
+
+            document.querySelectorAll('.medicine-card').forEach(card => {
+                card.style.display = (category === 'all' || card.getAttribute('data-category') === category) ? "flex" : "none";
+            });
+        }
+
+        function checkOrderStatus() {
+            if (document.getElementById('order-id-input').value.trim() === "") { alert('⚠️ الرجاء إدخال رقم الطلب أولاً'); return; }
+            document.getElementById('order-status-result').classList.remove('hidden');
+        }
+
+        function toggleChatBox() { document.getElementById('chat-box').classList.toggle('hidden'); }
+        
+        function sendChatMessage() {
+            let input = document.getElementById('chat-input');
+            if (input.value.trim() === "") return;
+            let container = document.getElementById('chat-messages');
+            container.innerHTML += `<div class="bg-teal-700 text-white p-3 rounded-2xl max-w-[85%] mr-auto text-xs">${input.value}</div>`;
+            input.value = "";
+            container.scrollTop = container.scrollHeight;
+            setTimeout(() => {
+                container.innerHTML += `<div class="bg-white p-3 rounded-2xl border border-slate-100 max-w-[85%] text-slate-700 text-xs">أهلاً بك. تم إرسال استفسارك للصيدلاني المناوب وسيتم الرد عليك فوراً.</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMedicines();
+            updateCartCount();
+        });
+    </script>
+
+</body>
+</html>

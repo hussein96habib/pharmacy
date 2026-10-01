@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلة التسوق - صيدليتي</title>
+    <!-- استدعاء Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- شريط التنقل -->
+    <header class="bg-teal-700 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold">🩺 صيدليتي</a>
+            <a href="pharmacy.html" class="bg-teal-800 text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-teal-900">العودة للصيدلية</a>
+        </div>
+    </header>
+
+    <!-- محتوى السلة والشراء -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">سلة التسوق وإتمام الطلب 🛒</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- القائمة اليسرى: الأدوية المختارة والحساب -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- الأدوية المحفوطة -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="font-bold text-lg text-gray-700">العلاجات المطلوبة</h2>
+                        <button onclick="clearAllCart()" class="text-xs text-red-600 hover:underline">حذف الكل 🗑️</button>
+                    </div>
+
+                    <!-- مكان عرض الأدوية ديناميكياً -->
+                    <div id="cart-items-list" class="space-y-3">
+                        <!-- سيتم تعبئته بواسطة الجافاسكربت -->
+                    </div>
+                </div>
+
+                <!-- تفاصيل الحساب -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-3 text-sm">
+                    <div class="flex justify-between text-gray-600">
+                        <span>مجموع العلاجات:</span>
+                        <span id="subtotal-price" class="font-bold">0 د.ع</span>
+                    </div>
+                    <div class="flex justify-between text-gray-600">
+                        <span>أجور التوصيل:</span>
+                        <span id="delivery-price" class="font-bold">2,000 د.ع</span>
+                    </div>
+                    <hr class="my-2 border-gray-100">
+                    <div class="flex justify-between text-base font-bold text-teal-800">
+                        <span>المجموع الكلي:</span>
+                        <span id="total-price">0 د.ع</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- القائمة اليمنى: استمارة المعومات -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="font-bold text-lg text-gray-800 mb-4">معلومات التوصيل 🛵</h2>
+
+                    <form onsubmit="submitOrder(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">الاسم الكامل</label>
+                            <input type="text" required placeholder="مثال: علي محمد" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-teal-700">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">رقم الهاتف</label>
+                            <input type="tel" required placeholder="07700000000" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-teal-700">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">عنوان التوصيل التفصيلي</label>
+                            <textarea rows="3" required placeholder="المحافظة، المنطقة، أقرب نقطة دالة..." class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-teal-700"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">طريقة الدفع</label>
+                            <select class="w-full px-3 py-2 border rounded-lg text-sm bg-white focus:outline-none focus:border-teal-700">
+                                <option>الدفع نقداً عند الاستلام 💵</option>
+                                <option>زين كاش (ZainCash) 📲</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-teal-700 text-white py-3 rounded-xl font-bold hover:bg-teal-800 transition text-sm shadow mt-2">تأكيد وإرسال الطلب</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-gray-800 text-white text-center py-4 text-sm mt-12">
+        <p>جميع الحقوق محفوظة © 2026 - تطبيق صيدليتي</p>
+    </footer>
+
+    <!-- سكربت إدارة وتفريغ وحساب السلة -->
+    <script>
+        const DELIVERY_FEE = 2000; // سعر التوصيل ثابت 2000 دينار
+
+        function getCart() {
+            return JSON.parse(localStorage.getItem('myCart')) || [];
+        }
+
+        function renderCart() {
+            let cart = getCart();
+            let listContainer = document.getElementById('cart-items-list');
+            let subtotalEl = document.getElementById('subtotal-price');
+            let deliveryEl = document.getElementById('delivery-price');
+            let totalEl = document.getElementById('total-price');
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-8 text-gray-400">
+                        <p class="text-base font-semibold">السلة فارغة حالياً 🛒</p>
+                        <a href="pharmacy.html" class="inline-block mt-3 text-teal-700 font-bold underline text-sm">عد للصيدلية واختر الأدوية</a>
+                    </div>
+                `;
+                subtotalEl.innerText = "0 د.ع";
+                deliveryEl.innerText = "0 د.ع";
+                totalEl.innerText = "0 د.ع";
+                return;
+            }
+
+            let html = '';
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                subtotal += item.price;
+                html += `
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-sm">${item.name}</h4>
+                            <p class="text-teal-700 font-bold text-xs mt-0.5">${item.price.toLocaleString()} د.ع</p>
+                        </div>
+                        <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 text-xs font-bold bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition flex items-center gap-1">
+                            🗑️ حذف
+                        </button>
+                    </div>
+                `;
+            });
+
+            listContainer.innerHTML = html;
+            subtotalEl.innerText = subtotal.toLocaleString() + " د.ع";
+            deliveryEl.innerText = DELIVERY_FEE.toLocaleString() + " د.ع";
+            totalEl.innerText = (subtotal + DELIVERY_FEE).toLocaleString() + " د.ع";
+        }
+
+        // حذف علاج معين حسب الفهرس (index)
+        function removeItem(index) {
+            let cart = getCart();
+            cart.splice(index, 1);
+            localStorage.setItem('myCart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        // تفريغ السلة بالكامل
+        function clearAllCart() {
+            if (confirm('هل أنت تأكد من إفراغ جميع العلاجات من السلة؟')) {
+                localStorage.removeItem('myCart');
+                renderCart();
+            }
+        }
+
+        // عند إرسال الطلب
+        function submitOrder(event) {
+            event.preventDefault();
+            let cart = getCart();
+
+            if (cart.length === 0) {
+                alert('السلة فارغة! اختر الأدوية أولاً قبل إرسال الطلب.');
+                return;
+            }
+
+            let orderId = "#ORD-" + Math.floor(1000 + Math.random() * 9000);
+            alert(`🎉 تم إرسال طلبك بنجاح!\nرقم الطلب الخاص بك هو: ${orderId}\nيمكنك استخدامه لتتبع حالة الطلب.`);
+            
+            localStorage.removeItem('myCart'); // مسح السلة بعد إكمال الطلب
+            window.location.href = "pharmacy.html"; // العودة للصيدلية
+        }
+
+        // تشغيل العرض فور فتح الصفحة
+        document.addEventListener('DOMContentLoaded', renderCart);
+    </script>
+
+</body>
+</html>

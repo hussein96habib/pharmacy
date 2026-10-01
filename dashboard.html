@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الصيدلي - صيدليتي</title>
+    <!-- استدعاء مكتبة Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- خط Cairo العربي -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- شريط التنقل العلوي للوحة التحكم -->
+    <header class="bg-teal-800 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <span class="text-2xl font-bold">🩺 صيدليتي - لوحة الصيدلي</span>
+            </div>
+            <div>
+                <a href="index.html" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition">تسجيل الخروج</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوى لوحة التحكم -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- إحصائيات سريعة -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-5 rounded-xl shadow border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">الأدوية المعروضة</p>
+                    <h3 class="text-2xl font-bold text-teal-700 mt-1">12 دواء</h3>
+                </div>
+                <div class="bg-teal-50 text-teal-700 p-3 rounded-xl text-xl">💊</div>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">الطلبات الجديدة</p>
+                    <h3 class="text-2xl font-bold text-teal-700 mt-1">3 طلبات</h3>
+                </div>
+                <div class="bg-teal-50 text-teal-700 p-3 rounded-xl text-xl">📦</div>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">حالة الصيدلية</p>
+                    <h3 class="text-lg font-bold text-green-600 mt-1">مفتوحة للعمل</h3>
+                </div>
+                <div class="bg-green-50 text-green-600 p-3 rounded-xl text-xl">🟢</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- نموذج إضافة دواء جديد (يمين الشاشة) -->
+            <div class="bg-white p-6 rounded-xl shadow border border-gray-100 lg:col-span-1">
+                <h2 class="text-lg font-bold mb-4 text-teal-800 border-b pb-2">➕ إضافة دواء جديد للمخزون</h2>
+                
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">اسم الدواء</label>
+                        <input type="text" placeholder="مثال: بانادول إكسترا" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-teal-700">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">القسم الطبي</label>
+                        <select class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-teal-700">
+                            <option>علاجات الصداع</option>
+                            <option>علاجات العيون والأذن</option>
+                            <option>فيتامينات ومكملات</option>
+                            <option>أدوية مزمنة</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">السعر (د.ع)</label>
+                        <input type="number" placeholder="مثال: 2500" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-teal-700">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">وصف مختصر</label>
+                        <textarea placeholder="وصف قصير عن الدواء أو الجرعة..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-teal-700 h-20"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-teal-700 text-white py-2 rounded-lg font-semibold hover:bg-teal-800 transition">حفظ وإضافة الدواء</button>
+                </form>
+            </div>
+
+            <!-- قائمة الطلبات الواردة (يسار الشاشة) -->
+            <div class="bg-white p-6 rounded-xl shadow border border-gray-100 lg:col-span-2">
+                <h2 class="text-lg font-bold mb-4 text-teal-800 border-b pb-2">📋 الطلبات الواردة من المرضى</h2>
+                
+                <div class="space-y-4">
+                    <!-- طلب رقم 1 -->
+                    <div class="border border-gray-200 p-4 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded font-semibold">قيد المعالجة</span>
+                            <h3 class="font-bold text-base mt-2">طلب دواء: بانادول إكسترا (عدد 2)</h3>
+                            <p class="text-sm text-gray-500">المريض: أحمد علي - العنوان: بغداد، المنصور</p>
+                            <p class="text-sm text-gray-500">الإجمالي: 5,000 د.ع</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-green-700 transition">قبول الطلب</button>
+                            <button class="bg-red-100 text-red-600 px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-red-200 transition">إلغاء</button>
+                        </div>
+                    </div>
+
+                    <!-- طلب رقم 2 -->
+                    <div class="border border-gray-200 p-4 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded font-semibold">مقبول / جاري التوصيل</span>
+                            <h3 class="font-bold text-base mt-2">طلب دواء: قطرة ترطيب العيون (عدد 1)</h3>
+                            <p class="text-sm text-gray-500">المريض: سارة محمد - العنوان: البصرة، الجزائر</p>
+                            <p class="text-sm text-gray-500">الإجمالي: 7,000 د.ع</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-teal-700 text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-teal-800 transition">تم التسليم</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-gray-800 text-white text-center py-4 text-sm mt-12">
+        <p>جميع الحقوق محفوظة © 2026 - تطبيق صيدليتي (لوحة التحكم)</p>
+    </footer>
+
+</body>
+</html>
